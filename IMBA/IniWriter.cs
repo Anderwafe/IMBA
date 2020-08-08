@@ -49,7 +49,7 @@ namespace IMBA
             try
             {
                 for (int i = 0; i < paramValues.Length; i++)
-                    paramValues[i] = $@"{i}={paramValues[i]}";
+                    paramValues[i] = $@"{i}:{paramValues[i]}";
                 for(int i = 0; i < iniText.Count; i++)
                 {
                     if(iniText[i].StartsWith(paramName + "=array"))

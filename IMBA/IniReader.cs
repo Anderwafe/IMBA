@@ -25,6 +25,8 @@ namespace IMBA
 
             foreach(var i in iniText)
             {
+                if (i.StartsWith(paramName + "=array"))
+                    continue;
                 if (i.StartsWith(paramName + "="))
                     return i.Remove(0, paramName.Length + 1);
             }
@@ -48,7 +50,7 @@ namespace IMBA
                         int c = i + 2 + a.Length;
                         for(int j = i+2; j < c; j++)
                         {
-                            a[b] = new Regex(@".*=").Replace(iniText[j], "");
+                            a[b] = new Regex(@".*:").Replace(iniText[j], "");
                             b++;
                         }
                         return a;
@@ -60,6 +62,16 @@ namespace IMBA
             {
                 return new string[] { GetValuebyParam(paramName) };
             }
+        }
+
+        public string[] GetParams()
+        {
+            return iniText.Select(x => new Regex(@".*=")
+                .Match(x)
+                .Value
+                .Replace("=",""))
+                .Where(x => x.Replace(" ", "") != "")
+                .ToArray();
         }
     }
 }
